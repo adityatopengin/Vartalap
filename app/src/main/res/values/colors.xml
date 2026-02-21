@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="md3_primary">#6750A4</color>
+    <color name="md3_onPrimary">#FFFFFF</color>
+    <color name="md3_primaryContainer">#EADDFF</color>
+    <color name="md3_onPrimaryContainer">#21005D</color>
+
+    <color name="md3_background">#FFFBFE</color>
+    <color name="md3_onBackground">#1C1B1F</color>
+    <color name="md3_surface">#FFFBFE</color>
+    <color name="md3_onSurface">#1C1B1F</color>
+
+    <color name="island_global">#D0BCFF</color>
+    <color name="island_user">#B2EBF2</color>
+    <color name="island_locked">#FFCDD2</color>
+</resources>

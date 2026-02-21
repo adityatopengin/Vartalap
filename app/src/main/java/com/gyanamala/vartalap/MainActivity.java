@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerIslands.setLayoutAnimation(animation);
 
         // Adapter will go here in Batch 4
-        // adapter = new IslandAdapter(this, islandList, myUsername);
-        // recyclerIslands.setAdapter(adapter);
+         adapter = new IslandAdapter(this, islandList, myUsername);
+         recyclerIslands.setAdapter(adapter);
     }
 
     private void loadIslandsFromFirebase() {
@@ -106,10 +106,10 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Trigger the adapter and animation
-                // if (adapter != null) {
-                //     adapter.notifyDataSetChanged();
-                //     recyclerIslands.scheduleLayoutAnimation(); 
-                // }
+                if (adapter != null) {
+                     adapter.notifyDataSetChanged();
+                     recyclerIslands.scheduleLayoutAnimation(); 
+                 }
             }
 
             @Override

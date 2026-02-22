@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "333082515943",
+    "firebase_url": "https://vartalap-4768d-default-rtdb.firebaseio.com",
+    "project_id": "vartalap-4768d",
+    "storage_bucket": "vartalap-4768d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333082515943:android:095d7277b26b5ef1f50542",
+        "android_client_info": {
+          "package_name": "com.gyanamala.vartalap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDccIsZUBnSThofqZHrHgXL40HHPP02bQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

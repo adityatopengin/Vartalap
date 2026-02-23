@@ -19,4 +19,3 @@ public class Message {
     public String getSender() { return sender; }
     public long getTimestamp() { return timestamp; }
 }
-

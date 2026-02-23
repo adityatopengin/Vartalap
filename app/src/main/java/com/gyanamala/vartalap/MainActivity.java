@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private String myUsername;
 
-    // These will be wired in Batch 4
-    // private IslandAdapter adapter;
+    private IslandAdapter adapter;
     private List<Island> islandList;
 
     @Override
@@ -41,14 +39,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // 1. Verify Identity
         prefs = getSharedPreferences("VartalapPrefs", MODE_PRIVATE);
         myUsername = prefs.getString("my_username", "Unknown");
 
-        // 2. Initialize Firebase
         islandsRef = FirebaseDatabase.getInstance().getReference("Islands");
 
-        // 3. Setup UI Components
         recyclerIslands = findViewById(R.id.recycler_islands);
         fabCreateIsland = findViewById(R.id.fab_create_island);
         islandList = new ArrayList<>();
@@ -56,10 +51,8 @@ public class MainActivity extends AppCompatActivity {
         setupBentoGrid();
         loadIslandsFromFirebase();
 
-        // 4. FAB Click Listener for creating new Islands
         fabCreateIsland.setOnClickListener(v -> showCreateIslandDialog());
         
-        // Hide FAB on scroll down for a cleaner look
         recyclerIslands.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -73,19 +66,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupBentoGrid() {
-        // Staggered Grid with 2 columns gives the "Bento" look
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         recyclerIslands.setLayoutManager(layoutManager);
 
-        // Apply a smooth cascading animation
-        int resId = android.R.anim.fade_in; // Fallback built-in animation
+        int resId = android.R.anim.fade_in; 
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, resId);
         recyclerIslands.setLayoutAnimation(animation);
 
-        // Adapter will go here in Batch 4
-         adapter = new IslandAdapter(this, islandList, myUsername);
-         recyclerIslands.setAdapter(adapter);
+        adapter = new IslandAdapter(this, islandList, myUsername);
+        recyclerIslands.setAdapter(adapter);
     }
 
     private void loadIslandsFromFirebase() {
@@ -94,10 +84,8 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 islandList.clear();
                 
-                // Manually inject the GLOBAL island at the very top
                 islandList.add(new Island("global_chat", "GLOBAL", "GLOBAL", null, System.currentTimeMillis()));
 
-                // Fetch user-created islands
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Island island = data.getValue(Island.class);
                     if (island != null) {
@@ -105,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                // Trigger the adapter and animation
                 if (adapter != null) {
                      adapter.notifyDataSetChanged();
                      recyclerIslands.scheduleLayoutAnimation(); 
@@ -120,20 +107,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showCreateIslandDialog() {
-        // A sophisticated Material 3 Dialog built entirely in Java
-        View dialogView = getLayoutInflater().inflate(R.layout.activity_setup, null); // Placeholder for custom view
-        
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Discover a New Island")
                 .setMessage("Name your public group. (Private PIN feature coming in updates!)")
                 .setPositiveButton("Create", (dialog, which) -> {
-                    // Logic to push new Island to Firebase will go here
                     String islandId = islandsRef.push().getKey();
-                    Island newIsland = new Island(islandId, "New Island", "PUBLIC", null, System.currentTimeMillis());
-                    islandsRef.child(islandId).setValue(newIsland);
+                    if (islandId != null) {
+                        Island newIsland = new Island(islandId, "New Island", "PUBLIC", null, System.currentTimeMillis());
+                        islandsRef.child(islandId).setValue(newIsland);
+                    }
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
     }
 }
-

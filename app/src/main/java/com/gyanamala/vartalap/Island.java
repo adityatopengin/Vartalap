@@ -25,4 +25,3 @@ public class Island {
     public String getPin() { return pin; }
     public long getTimestamp() { return timestamp; }
 }
-

@@ -31,7 +31,6 @@ public class SetupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // 1. Check if user already has an identity saved locally
         prefs = getSharedPreferences("VartalapPrefs", MODE_PRIVATE);
         if (prefs.contains("my_username")) {
             goToMainActivity();
@@ -40,17 +39,14 @@ public class SetupActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_setup);
 
-        // 2. Initialize Firebase and Views
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
         
-        // Securely grab the unique Android hardware ID
         deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         inputLayout = findViewById(R.id.input_layout_username);
         editUsername = findViewById(R.id.edit_username);
         btnContinue = findViewById(R.id.btn_continue);
 
-        // 3. Setup Button Click Listener
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,14 +61,13 @@ public class SetupActivity extends AppCompatActivity {
                     return;
                 }
 
-                inputLayout.setError(null); // Clear errors
+                inputLayout.setError(null);
                 performHandshake(requestedName);
             }
         });
     }
 
     private void performHandshake(final String username) {
-        // UI Feedback: Disable button while checking network
         btnContinue.setEnabled(false);
         btnContinue.setText("Verifying...");
 
@@ -80,19 +75,15 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    // Name exists! Check if it belongs to THIS phone.
                     String registeredDeviceId = snapshot.child("deviceId").getValue(String.class);
                     
                     if (deviceId.equals(registeredDeviceId)) {
-                        // It's the same user coming back after clearing app data
                         saveAndProceed(username);
                     } else {
-                        // Hijack attempt! Name belongs to another phone.
                         inputLayout.setError("This name is taken by another device.");
                         resetButton();
                     }
                 } else {
-                    // Name is completely free. Register it to this phone.
                     usersRef.child(username).child("deviceId").setValue(deviceId);
                     saveAndProceed(username);
                 }
@@ -107,7 +98,6 @@ public class SetupActivity extends AppCompatActivity {
     }
 
     private void saveAndProceed(String username) {
-        // Save locally so we never see this screen again
         prefs.edit().putString("my_username", username).apply();
         goToMainActivity();
     }
@@ -115,7 +105,7 @@ public class SetupActivity extends AppCompatActivity {
     private void goToMainActivity() {
         Intent intent = new Intent(SetupActivity.this, MainActivity.class);
         startActivity(intent);
-        finishAffinity(); // Destroys SetupActivity so user can't "back" into it
+        finishAffinity();
     }
 
     private void resetButton() {
@@ -123,4 +113,3 @@ public class SetupActivity extends AppCompatActivity {
         btnContinue.setText("Continue");
     }
 }
-

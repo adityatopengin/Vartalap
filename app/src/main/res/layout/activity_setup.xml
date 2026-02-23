@@ -7,19 +7,19 @@
     android:background="?attr/colorSurface"
     android:padding="24dp">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_welcome"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+    <ImageView
+        android:id="@+id/icon_welcome"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@android:drawable/ic_dialog_map"
+        app:tint="?attr/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/text_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStart="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/welcome_anim" /> 
-        <TextView
+        app:layout_constraintVertical_chainStyle="packed" /> 
+
+    <TextView
         android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toTopOf="@+id/text_subtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStart="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lottie_welcome" />
+        app:layout_constraintTop_toBottomOf="@+id/icon_welcome" />
 
     <TextView
         android:id="@+id/text_subtitle"
@@ -86,4 +86,3 @@
         app:layout_constraintTop_toBottomOf="@+id/input_layout_username" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

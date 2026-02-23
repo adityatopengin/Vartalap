@@ -1,88 +1,73 @@
- <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
-    android:padding="24dp">
+    android:background="?attr/colorBackground">
 
-    <ImageView
-        android:id="@+id/icon_welcome"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@android:drawable/ic_dialog_map"
-        app:tint="?attr/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/text_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStart="parent"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_chat"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorSurface"
+        app:title="Island Name"
+        app:titleTextColor="?attr/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" /> 
+        app:elevation="4dp"/>
 
-    <TextView
-        android:id="@+id/text_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Welcome to Vartalap"
-        android:textColor="?attr/colorPrimary"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/text_subtitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStart="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon_welcome" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_chat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/layout_input"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_chat" />
 
-    <TextView
-        android:id="@+id/text_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Claim your unique identity"
-        android:textColor="?attr/colorOnSurface"
-        android:textSize="16sp"
-        android:alpha="0.7"
-        app:layout_constraintBottom_toTopOf="@+id/input_layout_username"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStart="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_title" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_username"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:hint="Choose a Username"
-        app:boxCornerRadiusBottomEnd="16dp"
-        app:boxCornerRadiusBottomStart="16dp"
-        app:boxCornerRadiusTopEnd="16dp"
-        app:boxCornerRadiusTopStart="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStart="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_subtitle">
+        android:background="?attr/colorSurface"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_username"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_message"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="textNoSuggestions|textVisiblePassword"
-            android:maxLength="15"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginEnd="8dp"
+            app:boxCornerRadiusBottomEnd="24dp"
+            app:boxCornerRadiusBottomStart="24dp"
+            app:boxCornerRadiusTopEnd="24dp"
+            app:boxCornerRadiusTopStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_send"
+            app:layout_constraintStart_toStartOf="parent">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_continue"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="24dp"
-        android:text="Continue"
-        android:textSize="16sp"
-        app:cornerRadius="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStart="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_layout_username" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Type a message..."
+                android:inputType="textShortMessage|textMultiLine"
+                android:maxLines="4" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?attr/colorPrimary"
+            android:src="@android:drawable/ic_menu_send"
+            app:tint="?attr/colorOnPrimary"
+            app:elevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

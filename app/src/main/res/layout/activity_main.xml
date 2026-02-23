@@ -43,4 +43,3 @@
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-

@@ -36,16 +36,13 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        // 1. Get Details from the Intent
         islandId = getIntent().getStringExtra("ISLAND_ID");
         islandName = getIntent().getStringExtra("ISLAND_NAME");
         myUsername = getIntent().getStringExtra("MY_USERNAME");
 
-        // 2. Setup Firebase Reference (Islands -> specific island -> messages)
         messagesRef = FirebaseDatabase.getInstance().getReference("Islands")
                 .child(islandId).child("messages");
 
-        // 3. Initialize UI
         toolbarChat = findViewById(R.id.toolbar_chat);
         recyclerChat = findViewById(R.id.recycler_chat);
         editMessage = findViewById(R.id.edit_message);
@@ -55,19 +52,16 @@ public class ChatActivity extends AppCompatActivity {
         toolbarChat.setNavigationIcon(android.R.drawable.ic_media_previous);
         toolbarChat.setNavigationOnClickListener(v -> finish());
 
-        // 4. Setup RecyclerView
         messageList = new ArrayList<>();
         adapter = new MessageAdapter(this, messageList, myUsername);
         
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setStackFromEnd(true); // Forces list to start at the bottom
+        layoutManager.setStackFromEnd(true); 
         recyclerChat.setLayoutManager(layoutManager);
         recyclerChat.setAdapter(adapter);
 
-        // 5. Send Message Logic
         btnSend.setOnClickListener(v -> sendMessage());
 
-        // 6. Listen for incoming messages
         loadMessages();
     }
 
@@ -76,7 +70,7 @@ public class ChatActivity extends AppCompatActivity {
         if (!text.isEmpty()) {
             Message newMessage = new Message(text, myUsername, System.currentTimeMillis());
             messagesRef.push().setValue(newMessage);
-            editMessage.setText(""); // Clear input
+            editMessage.setText(""); 
         }
     }
 
@@ -92,7 +86,7 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 }
                 adapter.notifyDataSetChanged();
-                // Auto-scroll to the newest message
+                
                 if (!messageList.isEmpty()) {
                     recyclerChat.smoothScrollToPosition(messageList.size() - 1);
                 }
@@ -100,9 +94,7 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
             }
         });
     }
 }
-
